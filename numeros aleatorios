@@ -1,0 +1,39 @@
+import random
+
+def generar_centros_al_cuadrado(n):
+    # Inicializa el valor semilla (puedes cambiarlo)
+    semilla = random.randint(1000, 9999)
+    numeros = []
+    
+    for _ in range(n):
+        # Generar un nuevo número
+        semilla = (semilla ** 2) // 100 % 10000  # Cuadrar y tomar los 4 dígitos del medio
+        numeros.append(semilla)
+    
+    return numeros
+
+def generar_medios_cuadrados(n):
+    # Inicializa el valor semilla (puedes cambiarlo)
+    semilla = random.randint(1000, 9999)
+    numeros = []
+    
+    for _ in range(n):
+        # Generar un nuevo número
+        semilla = (semilla // 10) ** 2  # Dividir por 10 y cuadrar
+        semilla = semilla % 10000  # Tomar los 4 dígitos de la parte baja
+        numeros.append(semilla)
+    
+    return numeros
+
+# Generar 100 números aleatorios por ambos métodos
+n = 100
+numeros_centros_al_cuadrado = generar_centros_al_cuadrado(n)
+numeros_medios_cuadrados = generar_medios_cuadrados(n)
+
+# Mostrar los resultados
+print("Números generados por el método de centros al cuadrado:")
+print(numeros_centros_al_cuadrado)
+
+print("\nNúmeros generados por el método de medios cuadrados:")
+print(numeros_medios_cuadrados)
+
