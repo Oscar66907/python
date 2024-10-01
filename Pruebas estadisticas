@@ -1,0 +1,42 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Generar 100 números aleatorios entre 0 y 1
+n = 100
+random_numbers = np.random.rand(n)
+
+# 1. Prueba de uniformidad (Prueba de Chi-cuadrado)
+def uniformity_test(data, bins=10):
+    observed_freq, _ = np.histogram(data, bins=bins, range=(0, 1))
+    expected_freq = np.full(bins, n / bins)
+    
+    chi2_stat, p_value = stats.chisquare(observed_freq, expected_freq)
+    return chi2_stat, p_value
+
+chi2_stat, p_value_uniformity = uniformity_test(random_numbers)
+print(f"Prueba de uniformidad: Chi-cuadrado = {chi2_stat}, p-valor = {p_value_uniformity}")
+
+# 2. Prueba de aleatoriedad (Prueba de Runs)
+def randomness_test(data):
+    runs, _ = stats.runs(data)
+    return runs
+
+runs_stat = randomness_test(random_numbers)
+print(f"Prueba de aleatoriedad: Número de runs = {runs_stat}")
+
+# 3. Prueba de independencia (Prueba de correlación de Pearson)
+def independence_test(data):
+    correlation, p_value = stats.pearsonr(data[:-1], data[1:])
+    return correlation, p_value
+
+correlation, p_value_independence = independence_test(random_numbers)
+print(f"Prueba de independencia: Correlación = {correlation}, p-valor = {p_value_independence}")
+
+# Graficar los números aleatorios
+plt.hist(random_numbers, bins=10, edgecolor='black', alpha=0.7)
+plt.title('Histograma de Números Aleatorios')
+plt.xlabel('Valor')
+plt.ylabel('Frecuencia')
+plt.grid(True)
+plt.show()
